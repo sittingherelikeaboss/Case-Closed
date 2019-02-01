@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.5"
+        android:scaleType="centerCrop"
+        android:src="@drawable/airport" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello"
+        android:textSize="40sp"
+        android:textColor="@android:color/black"
+        android:id="@+id/hello_id"
+        android:layout_centerInParent="true"/>
+
+    <Button
+        android:text="SAVE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/saveButton_id"
+        android:layout_below="@id/threshold_id"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:textSize="15dp"/>
+    <ImageView
+        android:id="@+id/bag_id"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_above="@id/saveButton_id"
+        android:layout_marginBottom="120dp"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/baggage_blue"/>
+    <EditText
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/threshold_id"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/hello_id"
+        android:padding="10dp"
+        android:hint="enter baggage allowance"
+        android:textColorHint="@color/colorPrimary"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="KG"
+        android:id="@+id/kg_button_id"
+        android:layout_alignEnd="@+id/threshold_id"
+        android:layout_below="@+id/threshold_id"
+        android:layout_marginTop="100dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lbs_button_id"
+        android:text="LBS"
+        android:layout_alignStart="@+id/threshold_id"
+        android:layout_below="@+id/threshold_id"
+        android:layout_marginTop="100dp"/>
+
+</RelativeLayout>

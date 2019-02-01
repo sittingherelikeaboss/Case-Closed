@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <!-- only select one menu item -->
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_change_threshold"
+            android:icon="@drawable/ic_change_threshold"
+            android:title="Change Threshold" />
+        <item
+            android:id="@+id/nav_tourist_destinations"
+            android:icon="@drawable/ic_tourist_destinations"
+            android:title="Tourist Destinations" />
+    </group>
+
+</menu>

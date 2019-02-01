@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ViewFlipper
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/backgroundViewFlipper_id">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/canada_morainelake"
+            android:scaleType="centerCrop"
+            android:alpha="0.65"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/iceland"
+            android:scaleType="centerCrop"
+            android:alpha="0.65"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/iceland2"
+            android:scaleType="centerCrop"
+            android:alpha="0.65"/>
+
+    </ViewFlipper>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/google_places_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/find_tourist_attractions_id"
+        android:layout_marginBottom="30dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/find_tourist_attractions_id"
+        android:text="Find Tourist Attractions"
+        android:textSize="30sp"
+        android:layout_above="@+id/id_city_name"
+        android:textColor="@android:color/black"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/id_city_name"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:textColor="@android:color/black"
+        android:hint="enter city name"
+        android:singleLine="true"
+        android:inputType="text"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_save_city_name"
+        android:layout_below="@+id/id_city_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="ENTER"/>
+
+</RelativeLayout>
