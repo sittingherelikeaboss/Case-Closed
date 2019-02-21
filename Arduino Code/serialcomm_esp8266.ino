@@ -11,10 +11,6 @@
 #define FIREBASE_HOST "case-closed-d2bed.firebaseio.com"
 #define FIREBASE_AUTH "viWefTKMje4gkj0ypNrmnJ9SQXlZ9jsis4GEJYpb"
 
-// HOUSE 
-//#define WIFI_SSID "NorthstarFIBE"
-//#define WIFI_PASSWORD "2429210615"
-
 // UNCOMMENT WHEN OUTSIDE THE HOUSE
 #define WIFI_SSID "UFOs"
 #define WIFI_PASSWORD "thebestpug"
