@@ -43,7 +43,9 @@ public class ChangeThresholdFragment extends Fragment implements View.OnClickLis
 
         Switch weightSwitch= (Switch)view.findViewById(R.id.weight_switch);
         switchStatus = (TextView) view.findViewById(R.id.weight_switch);
-
+        // initially when app is launched always set to kg
+        mDatabase = FirebaseDatabase.getInstance().getReference(); // Instance of Firebase Database node
+        mDatabase.child("metric").setValue(1);
         weightSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
@@ -60,9 +62,6 @@ public class ChangeThresholdFragment extends Fragment implements View.OnClickLis
 
 
         editThreshold = (EditText) view.findViewById(R.id.threshold_id);
-
-        mDatabase = FirebaseDatabase.getInstance().getReference(); // Instance of Firebase Database node
-
 
         // Do this when SAVE button is pressed
         saveThreshold.setOnClickListener(this);

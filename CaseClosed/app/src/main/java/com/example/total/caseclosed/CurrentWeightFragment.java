@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 //import android.widget.Button;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.DecimalFormat;
+//public final class Math;
 
 public class CurrentWeightFragment extends Fragment implements View.OnClickListener {
 
@@ -37,7 +41,8 @@ public class CurrentWeightFragment extends Fragment implements View.OnClickListe
     private Button changeThreshold;
     private String currentThreshold;
     private double threshold;
-
+    private ProgressBar weightProgress;
+    private double weightPercentage;
 
 
     @Nullable
@@ -46,19 +51,20 @@ public class CurrentWeightFragment extends Fragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.fragment_current_weight, container, false);
         showCurrentWeight = (TextView) view.findViewById(R.id.showFirebaseWeight_id);
         displayThreshold = (TextView) view.findViewById(R.id.thresholdView_id);
+        weightProgress= (ProgressBar) view.findViewById(R.id.weightProgressBar);
 
        mDatabase = FirebaseDatabase.getInstance().getReference(); // Instance of Firebase Database node
        if(feedback == null) {
             feedback = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100);
         }
 
-        // threshold read
+        // ----------------------- threshold read
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 currentThreshold = dataSnapshot.child("threshold").getValue().toString();
-
-                displayThreshold.setText(currentThreshold ); // Show currentThreshold in TextView
+                displayThreshold.setText(currentThreshold+" kg"); // Show currentThreshold in TextView
+                displayThreshold.setTextColor(Color.parseColor("#060606"));
 
             }
 
@@ -69,22 +75,24 @@ public class CurrentWeightFragment extends Fragment implements View.OnClickListe
         });
 
 
-        // weight read
+        // ------------------------ weight read
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 currentWeight = dataSnapshot.child("weight").getValue().toString();
+                // to show one decimal place only
                 weight = Double.parseDouble(currentWeight);
+                double CutcurrentWeight =Double.parseDouble(new DecimalFormat("##.#").format(weight));
                 threshold = Double.parseDouble(currentThreshold);
 
                 if(weight >= threshold) {
-                    showCurrentWeight.setText(currentWeight + " kg"); // Show currentThreshold in TextView
-                    showCurrentWeight.setTextColor(Color.RED);
+                    showCurrentWeight.setText(CutcurrentWeight + " kg"); // Show currentThreshold in TextView
+                    showCurrentWeight.setTextColor(Color.parseColor("#D43229"));
                     feedback.startTone(ToneGenerator.TONE_PROP_ACK); // Play tone for 50 ms
                 }
                 else {
-                    showCurrentWeight.setText(currentWeight + " kg"); // Show currentThreshold in TextView
-                    showCurrentWeight.setTextColor(Color.GREEN);
+                    showCurrentWeight.setText(CutcurrentWeight + " kg"); // Show currentThreshold in TextView
+                    showCurrentWeight.setTextColor(Color.parseColor("#21B30C"));
                     feedback.stopTone();
                 }
                 Log.d("Weight updated", currentWeight);
@@ -96,8 +104,22 @@ public class CurrentWeightFragment extends Fragment implements View.OnClickListe
             }
         });
 
-        // Do this when SAVE button is pressed
-        //saveThreshold.setOnClickListener(this);
+
+        //-------------------------------------------- Weight Progress bar
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                weightPercentage=100*((float)weight/(float)threshold);
+                double fwp=java.lang.Math.ceil(weightPercentage);
+                int wp = (int) fwp ;
+                weightProgress.setProgress(wp);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Add something here when something bad happens
+            }
+        });
 
         return view;
     }
