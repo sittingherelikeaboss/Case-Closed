@@ -5,9 +5,13 @@
 
     <!-- only select one menu item -->
     <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_current_weight"
+            android:icon="@drawable/home"
+            android:title="Home" /> -->
         <item android:id="@+id/nav_change_threshold"
             android:icon="@drawable/ic_change_threshold"
-            android:title="Change Threshold" />
+            android:title="Set Threshold" />
         <item
             android:id="@+id/nav_tourist_destinations"
             android:icon="@drawable/ic_tourist_destinations"

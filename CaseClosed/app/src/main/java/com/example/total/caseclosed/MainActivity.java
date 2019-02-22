@@ -38,14 +38,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // This will show our change threshold fragment when we actually want it
         if(savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChangeThresholdFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_change_threshold);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CurrentWeightFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_current_weight);
         }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
+            case R.id.nav_current_weight:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CurrentWeightFragment ()).commit();
+                Toast.makeText(this,"Selected 'Home'", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.nav_change_threshold:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChangeThresholdFragment()).commit();
                 Toast.makeText(this,"Selected 'Change Threshold'", Toast.LENGTH_SHORT).show();

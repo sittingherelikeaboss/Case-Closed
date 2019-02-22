@@ -1,69 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.5"
-        android:scaleType="centerCrop"
-        android:src="@drawable/airport" />
+  <Button
+      android:id="@+id/saveButton_id"
+      android:layout_width="match_parent"
+      android:layout_height="89dp"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentBottom="true"
+      android:layout_marginStart="0dp"
+      android:layout_marginEnd="0dp"
+      android:layout_marginBottom="8dp"
+      android:background="@color/colorPrimary"
+      android:lineSpacingExtra="8sp"
+      android:text="SAVE"
+      android:textColor="@android:color/background_light"
+      android:textSize="18sp"
+      android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello"
-        android:textSize="40sp"
-        android:textColor="@android:color/black"
-        android:id="@+id/hello_id"
-        android:layout_centerInParent="true"/>
+  <ImageView
+      android:id="@+id/bag_id"
+      android:layout_width="269dp"
+      android:layout_height="297dp"
+      android:layout_above="@+id/threshold_id"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentTop="true"
+      android:layout_alignParentEnd="true"
+      android:layout_marginStart="86dp"
+      android:layout_marginTop="81dp"
+      android:layout_marginEnd="56dp"
+      android:layout_marginBottom="26dp"
+      app:srcCompat="@drawable/bag" />
 
-    <Button
-        android:text="SAVE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/saveButton_id"
-        android:layout_below="@id/threshold_id"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"
-        android:textSize="15dp"/>
-    <ImageView
-        android:id="@+id/bag_id"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_above="@id/saveButton_id"
-        android:layout_marginBottom="120dp"
-        android:layout_centerHorizontal="true"
-        app:srcCompat="@drawable/baggage_blue"/>
-    <EditText
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/threshold_id"
-        android:layout_centerInParent="true"
-        android:layout_below="@+id/hello_id"
-        android:padding="10dp"
-        android:hint="enter baggage allowance"
-        android:textColorHint="@color/colorPrimary"/>
+  <EditText
+      android:id="@+id/threshold_id"
+      android:layout_width="220dp"
+      android:layout_height="wrap_content"
+      android:layout_above="@+id/weight_switch"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentEnd="true"
+      android:layout_marginStart="96dp"
+      android:layout_marginEnd="94dp"
+      android:layout_marginBottom="70dp"
+      android:ems="10"
+      android:hint="enter baggage allowance"
+      android:inputType="number"
+      android:padding="10dp"
+      android:textColorHint="@color/colorPrimary" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="KG"
-        android:id="@+id/kg_button_id"
-        android:layout_alignEnd="@+id/threshold_id"
-        android:layout_below="@+id/threshold_id"
-        android:layout_marginTop="100dp"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/lbs_button_id"
-        android:text="LBS"
-        android:layout_alignStart="@+id/threshold_id"
-        android:layout_below="@+id/threshold_id"
-        android:layout_marginTop="100dp"/>
+  <Switch
+      android:id="@+id/weight_switch"
+      android:layout_width="wrap_content"
+      android:layout_height="0dp"
+      android:layout_above="@+id/saveButton_id"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentEnd="true"
+      android:layout_marginStart="50dp"
+      android:layout_marginEnd="190dp"
+      android:layout_marginBottom="87dp"
+      android:checked="true"
+      android:scaleX="1.5"
+      android:scaleY="1.5"
+      android:showText="true"
+      android:textColorLink="@android:color/holo_purple"
+      android:textIsSelectable="true"
+      android:textOff="lb"
+      android:textOn="KG" />
 
 </RelativeLayout>

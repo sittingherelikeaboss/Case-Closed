@@ -39,7 +39,7 @@ public class CurrentWeightActivity extends AppCompatActivity {
 
         showCurrentWeight = (TextView) findViewById(R.id.showFirebaseWeight_id);
         displayThreshold = (TextView) findViewById(R.id.thresholdView_id);
-        changeThreshold = (Button) findViewById(R.id.changeThreshold_id);
+        //changeThreshold = (Button) findViewById(R.id.changeThreshold_id);
 
         mDatabase = FirebaseDatabase.getInstance().getReference(); // Instance of Firebase Database node
         if(feedback == null) {
