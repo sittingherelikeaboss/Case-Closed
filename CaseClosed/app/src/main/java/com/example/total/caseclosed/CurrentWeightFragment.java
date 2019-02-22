@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 //import android.widget.Button;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Switch;
@@ -43,6 +44,9 @@ public class CurrentWeightFragment extends Fragment implements View.OnClickListe
     private double threshold;
     private ProgressBar weightProgress;
     private double weightPercentage;
+    private String currentUnit;
+    private String unit;
+
 
 
     @Nullable
@@ -57,13 +61,35 @@ public class CurrentWeightFragment extends Fragment implements View.OnClickListe
        if(feedback == null) {
             feedback = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100);
         }
+        //-------------------------------------------- Set kg/lb
+        //initialize to kg
+        unit="kg";
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                currentUnit= dataSnapshot.child("metric").getValue().toString();
+                double cu = Double.parseDouble(currentUnit);
+                if(cu==1){
+                    unit="kg";
+                }
+                else{
+                    unit="lb";
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Add something here when something bad happens
+            }
+        });
+
 
         // ----------------------- threshold read
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 currentThreshold = dataSnapshot.child("threshold").getValue().toString();
-                displayThreshold.setText(currentThreshold+" kg"); // Show currentThreshold in TextView
+                displayThreshold.setText(currentThreshold+" "+unit); // Show currentThreshold in TextView
                 displayThreshold.setTextColor(Color.parseColor("#060606"));
 
             }
@@ -86,12 +112,12 @@ public class CurrentWeightFragment extends Fragment implements View.OnClickListe
                 threshold = Double.parseDouble(currentThreshold);
 
                 if(weight >= threshold) {
-                    showCurrentWeight.setText(CutcurrentWeight + " kg"); // Show currentThreshold in TextView
+                    showCurrentWeight.setText(CutcurrentWeight + " "+unit); // Show currentThreshold in TextView
                     showCurrentWeight.setTextColor(Color.parseColor("#D43229"));
                     feedback.startTone(ToneGenerator.TONE_PROP_ACK); // Play tone for 50 ms
                 }
                 else {
-                    showCurrentWeight.setText(CutcurrentWeight + " kg"); // Show currentThreshold in TextView
+                    showCurrentWeight.setText(CutcurrentWeight + " "+unit); // Show currentThreshold in TextView
                     showCurrentWeight.setTextColor(Color.parseColor("#21B30C"));
                     feedback.stopTone();
                 }
