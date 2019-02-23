@@ -30,29 +30,17 @@ void setup() {
 }
 
 void loop() {
-  //-----------------------------------//
-  // START OF TEMPERATURE SENSOR STUFF //
-  //-----------------------------------//
-//  int tempSensorVal = analogRead(tempSensorPin);
-//  float tempVoltage = (tempSensorVal / 1024.0) * 5.0; // convert coltage to temperature in celcius
-//  float temperature = (tempVoltage - 0.5) * 100;
-//  Serial.print("Voltage: ");
-//  Serial.print(tempVoltage);
-//  Serial.print(" Temperature: ");
-//  Serial.println(temperature);
-  //---------------------------------//
-  // END OF TEMPERATURE SENSOR STUFF //
-  //---------------------------------//
-
-
-
   //------------------------------//
   // START OF WEIGHT SENSOR STUFF // 
   //------------------------------//
 
   scale.set_scale(calibration_factor); //Adjust to this calibration factor
-  Serial.println(scale.get_units(), 1);
- 
+  if((scale.get_units(), 1) < 0) {
+    Serial.println(0);
+  }
+  else{
+    Serial.println(scale.get_units(), 1);
+  }
   //----------------------------//
   // END OF WEIGHT SENSOR STUFF //
   //----------------------------//
