@@ -12,24 +12,27 @@
 #define FIREBASE_AUTH "viWefTKMje4gkj0ypNrmnJ9SQXlZ9jsis4GEJYpb"
 
 // HOUSE 
-//#define WIFI_SSID "NorthstarFIBE"
-//#define WIFI_PASSWORD "2429210615"
+#define WIFI_SSID "NorthstarFIBE"
+#define WIFI_PASSWORD "2429210615"
 
 // UNCOMMENT WHEN OUTSIDE THE HOUSE
-#define WIFI_SSID "UFOs"
-#define WIFI_PASSWORD "thebestpug"
+//#define WIFI_SSID "UFOs"
+//#define WIFI_PASSWORD "thebestpug"
 
-#define rxPin 5 // Pin D1
-#define txPin 4 // Pin D2
+#include "HX711.h"
 
-// GLOBAL VARIABLES
-String inString = "";
-//int piezoPin = 16; // Pin D0
+#define DOUT 5 // Pin D1 on the NodeMCU ESP8266
+#define CLK 4 // Pin D2 on the NodeMUC ESP8266
 
-SoftwareSerial wifiSerial(rxPin, txPin); // RX, TX
+float calibration_factor = 23170; 
+HX711 scale;
 
-void setup() {
+void setup() {  
   Serial.begin(9600);
+
+  //------------------------------//
+  // START OF WIFI CONNECTION     // 
+  //------------------------------//  
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   Serial.print("Connecting");
   while(WiFi.status() != WL_CONNECTED) {
@@ -39,43 +42,66 @@ void setup() {
   Serial.println();
   Serial.print("Connected:");
   Serial.println(WiFi.localIP());
-  
-  wifiSerial.begin(115200); // We need to connect at NodeMCU default baud rate first
-  wifiSerial.println("AT+IPR=9600)");
-  delay(1000);
-  wifiSerial.end();
-  // Start the software serial for communication with the ESP8266
-  wifiSerial.begin(9600);
-  Serial.println("<<< NodeMCU ESP8266 is ready >>>");
-  wifiSerial.println("AT+GMR");
+  //------------------------------//
+  //   END OF WIFI CONNECTION     // 
+  //------------------------------// 
 
+
+  //------------------------------//
+  // START OF WEIGHT SENSOR STUFF // 
+  //------------------------------//
+  scale.begin(DOUT, CLK);
+//  scale.set_scale();
+  scale.set_scale(calibration_factor); //Adjust to this calibration factor
+  scale.tare(); //Reset the scale to 0
+
+  long zero_factor = scale.read_average(); //Get a baseline reading
+  Serial.print("Zero factor: "); //This can be used to remove the need to tare the scale. Useful in permanent scale projects.
+  Serial.println(zero_factor);
+  //----------------------------//
+  // END OF WEIGHT SENSOR STUFF //
+  //----------------------------//
+
+
+  //------------------------------//
+  // START OF FIREBASE DATABASE   // 
+  //------------------------------//
   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+  //----------------------------//
+  // END OF FIREBASE DATABASE   //
+  //----------------------------//
+
+
   delay(1000);
 }
 
 void loop() {
-  // Read serial input
-  if(wifiSerial.available() > 0) {
-    int inChar = wifiSerial.read();
+  //------------------------------//
+  // START OF WEIGHT SENSOR STUFF // 
+  //------------------------------//
+  double weight; 
+  scale.set_scale(calibration_factor); //Adjust to this calibration factor
+  weight = scale.get_units();
+  weight = weight < 0 ? 0 : weight;
+  Serial.println(weight);
+//  Serial.println(scale.get_units(), 2);
+  //----------------------------//
+  // END OF WEIGHT SENSOR STUFF //
+  //----------------------------//
 
-    if(inChar != '\n') {
-      // As long as the incoming byte is not a newline, convert the incoming byte to a char and add it to the string
-      inString += (char)inChar;
-    }
-    else { // if you get a newline, print the string, then the string's value as a float
-      //Serial.print("Temperature: ");
-      float receivedTemp = inString.toFloat();
-//      if(receivedTemp > 25) {
-//        tone(piezoPin, 1000, 100);
-//      }
-      Firebase.setFloat("weight", receivedTemp);
-      if(Firebase.failed()) {
-        Serial.println("Sent data to Firebase failed");
-      }
-      Serial.println(receivedTemp); // incoming string converted to float
 
-      inString = ""; // clear string for new input
-    }
+  //------------------------------//
+  // START OF FIREBASE DATABASE   // 
+  //------------------------------//
+  Firebase.setFloat("weight", weight);
+  if(Firebase.failed()) {
+     Serial.println("Sent data to Firebase failed");
   }
-}
+  //----------------------------//
+  // END OF FIREBASE DATABASE   //
+  //----------------------------//
 
+  scale.power_down();              // put the ADC in sleep mode
+  delay(500);
+  scale.power_up();
+}
