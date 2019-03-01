@@ -46,6 +46,7 @@ public class CurrentWeightFragment extends Fragment implements View.OnClickListe
     private double weightPercentage;
     private String currentUnit;
     private String unit;
+    private  double CutcurrentWeight;
 
 
 
@@ -108,7 +109,7 @@ public class CurrentWeightFragment extends Fragment implements View.OnClickListe
                 currentWeight = dataSnapshot.child("weight").getValue().toString();
                 // to show one decimal place only
                 weight = Double.parseDouble(currentWeight);
-                double CutcurrentWeight =Double.parseDouble(new DecimalFormat("##.#").format(weight));
+                CutcurrentWeight =Double.parseDouble(new DecimalFormat("##.#").format(weight));
                 threshold = Double.parseDouble(currentThreshold);
                 // lb conversian
                 currentUnit= dataSnapshot.child("metric").getValue().toString();
@@ -142,7 +143,8 @@ public class CurrentWeightFragment extends Fragment implements View.OnClickListe
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                weightPercentage=100*((float)weight/(float)threshold);
+                //weightPercentage=100*((float)weight/(float)threshold);
+                weightPercentage=100*((float)CutcurrentWeight/(float)threshold);
                 double fwp=java.lang.Math.ceil(weightPercentage);
                 int wp = (int) fwp ;
                 weightProgress.setProgress(wp);
