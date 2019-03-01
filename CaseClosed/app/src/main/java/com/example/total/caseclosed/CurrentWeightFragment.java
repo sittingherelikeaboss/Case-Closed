@@ -110,7 +110,14 @@ public class CurrentWeightFragment extends Fragment implements View.OnClickListe
                 weight = Double.parseDouble(currentWeight);
                 double CutcurrentWeight =Double.parseDouble(new DecimalFormat("##.#").format(weight));
                 threshold = Double.parseDouble(currentThreshold);
-
+                // lb conversian
+                currentUnit= dataSnapshot.child("metric").getValue().toString();
+                double cu = Double.parseDouble(currentUnit);
+                if(cu==0){
+                    CutcurrentWeight=CutcurrentWeight*2.2;
+                }
+                else{
+                }
                 if(weight >= threshold) {
                     showCurrentWeight.setText(CutcurrentWeight + " "+unit); // Show currentThreshold in TextView
                     showCurrentWeight.setTextColor(Color.parseColor("#D43229"));
