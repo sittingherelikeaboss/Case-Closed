@@ -82,7 +82,8 @@ void loop() {
   double weight; 
   scale.set_scale(calibration_factor); //Adjust to this calibration factor
   weight = scale.get_units();
-  weight = weight < 0 ? 0 : weight;
+  //weight = weight < 0 ? 0 : weight;
+  weight = 6.9 + weight; // The luggage weight is 6.9kg so we are adding that to the known weight inside
   Serial.println(weight);
 //  Serial.println(scale.get_units(), 2);
   //----------------------------//
