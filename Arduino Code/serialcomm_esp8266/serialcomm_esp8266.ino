@@ -12,12 +12,12 @@
 #define FIREBASE_AUTH "viWefTKMje4gkj0ypNrmnJ9SQXlZ9jsis4GEJYpb"
 
 // HOUSE 
-#define WIFI_SSID "NorthstarFIBE"
-#define WIFI_PASSWORD "2429210615"
+#define WIFI_SSID ""
+#define WIFI_PASSWORD ""
 
 // UNCOMMENT WHEN OUTSIDE THE HOUSE
-//#define WIFI_SSID "UFOs"
-//#define WIFI_PASSWORD "thebestpug"
+//#define WIFI_SSID ""
+//#define WIFI_PASSWORD ""
 
 #include "HX711.h"
 
